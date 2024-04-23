@@ -5,6 +5,9 @@ using UnityEngine;
 public class SelectionManager : MonoBehaviour
 {
     string selectableTag = "Selectable";
+    string inventoryTag = "Collectible";
+    string itemInteractTag = "ItemInteract";
+    string dialogueTag = "Talkable";
     string colorTag = "color";
     string pipeTag = "Pipe";
     string keyTag = "KeyPiece";
@@ -15,6 +18,9 @@ public class SelectionManager : MonoBehaviour
     Transform _selection;
     public PlayerMovement Player;
     public GameObject key;
+    public Camera cam;
+
+    public colorPuzzleManager colorButtonPuzzle;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +41,7 @@ public class SelectionManager : MonoBehaviour
             _selection = null;
             */
         }
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit))
         {
@@ -87,56 +93,54 @@ public class SelectionManager : MonoBehaviour
                     hit.transform.GetComponent<Rigidbody>().freezeRotation = false;
                 }
                 _selection = selection;
-            } else if(selection.CompareTag(colorTag))
+            }
+            else if (selection.CompareTag(inventoryTag))
             {
-                var selectionn = hit.transform;
-                //float distt = Vector3.Distance(hit.transform.position, Player.holdPos.position);
                 if (hit.distance < 4)
                 {
-                    if (Input.GetKeyDown(KeyCode.E) && !colorOrderPuzzle.Instance.complete && colorOrderPuzzle.Instance.sprite.GetCurrentAnimatorStateInfo(0).IsName("indicatorIdle"))
+                    if (Input.GetKeyDown(KeyCode.E) && Player.holding == null && !Player.throwable)
                     {
-                        colorOrderPuzzle.Instance.Check(selectionn.gameObject);
+                        Player.gameObject.GetComponent<InventoryManager>().AddItem(selection.GetComponent<ItemOverworld>().itemToGive);
+                        selection.gameObject.SetActive(false);
                     }
                 }
             }
-            else if (selection.CompareTag(pipeTag))
+            else if (selection.CompareTag(colorTag))
             {
-                var selectionn = hit.transform;
-                //float distt = Vector3.Distance(hit.transform.position, Player.holdPos.position);
                 if (hit.distance < 4)
                 {
-                    if (Input.GetKeyDown(KeyCode.E) && !pipePuzzle.Instance.complete && selectionn.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Idle") || Input.GetKeyDown(KeyCode.E) && selection.gameObject.name == "SMILE")
+                    var selectionn = hit.transform;
+                    AnimatorClipInfo[] CurrentClipInfo = selectionn.GetComponentInChildren<Animator>().GetCurrentAnimatorClipInfo(0);
+                    if (Input.GetKeyDown(KeyCode.E) && CurrentClipInfo[0].clip.name.Contains("Idle"))
                     {
-                        selectionn.GetComponent<Animator>().SetTrigger("Next");
+                        //Debug.Log("fda");
+                        selectionn.GetComponentInChildren<Animator>().SetTrigger("Press");
+                        selectionn.GetComponent<colorButtonScript>().Pressed();
+                        colorButtonPuzzle.Check();
                     }
                 }
             }
-            else if (selection.CompareTag(keyTag))
+            else if (selection.CompareTag(itemInteractTag))
             {
-                var selectionn = hit.transform;
-                //float distt = Vector3.Distance(hit.transform.position, Player.holdPos.position);
                 if (hit.distance < 4)
                 {
+                    var selectionn = hit.transform;
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        Player.keyParts++;
-                        selectionn.GetComponent<MeshRenderer>().enabled = false;
-                        selectionn.GetComponent<MeshCollider>().enabled = false;
+                        InventoryManager mainInventory = Player.gameObject.GetComponent<InventoryManager>();
+                        if (mainInventory.inventory[mainInventory.selectedItem] == selectionn.GetComponent<itemInteractScript>().solution)
+                        {
+                            selectionn.GetComponent<itemInteractScript>().finish.SetTrigger("Solve");
+                            mainInventory.inventory[mainInventory.selectedItem] = null;
+                            mainInventory.UpdateUI();
+                        }
                     }
                 }
             }
-            else if (selection.CompareTag(formTag))
+            /*else if (selection.CompareTag(dialogueTag))
             {
-                var selectionn = hit.transform;
-                //float distt = Vector3.Distance(hit.transform.position, Player.holdPos.position);
-                if (hit.distance < 4)
-                {
-                    if (Input.GetKeyDown(KeyCode.E) && Player.keyParts == 3)
-                    {
-                        key.SetActive(true);
-                    }
-                }
-            }
+
+            }*/
         }
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - KeyPiece
   - Pipe
   - KeyForm
+  - Collectible
+  - ItemInteract
   layers:
   - Default
   - TransparentFX
