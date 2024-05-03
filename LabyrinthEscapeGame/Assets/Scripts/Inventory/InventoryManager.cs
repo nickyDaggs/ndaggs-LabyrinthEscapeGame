@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public int selectedItem = 0;
     public RectTransform pointer;
     public float[] pointerLocations = new float[9];
+    public Sprite transparent;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +61,14 @@ public class InventoryManager : MonoBehaviour
             {
                 inventoryParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = inventory[i].itemSprite;
 
+            }
+            else
+            {
+                inventoryParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = transparent;
+                if(curIndex > i)
+                {
+                    curIndex = i;
+                }
             }
         }
     }

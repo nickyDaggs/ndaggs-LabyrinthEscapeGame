@@ -6,6 +6,7 @@ public class itemInteractScript : MonoBehaviour
 {
     public InventoryItem solution;
     public Animator finish;
+    
     // Start is called before the first frame update
     void Start()
     {

@@ -11,6 +11,8 @@ TagManager:
   - KeyForm
   - Collectible
   - ItemInteract
+  - Talkable
+  - ItemCombiner
   layers:
   - Default
   - TransparentFX
