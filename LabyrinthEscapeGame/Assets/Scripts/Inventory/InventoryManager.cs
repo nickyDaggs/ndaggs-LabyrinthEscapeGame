@@ -14,12 +14,6 @@ public class InventoryManager : MonoBehaviour
     public float[] pointerLocations = new float[9];
     public Sprite transparent;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void Update()
     {
         if(Input.mouseScrollDelta.y > 0f)

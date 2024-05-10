@@ -11,9 +11,9 @@ public class SelectionManager : MonoBehaviour
     string itemCombineTag = "ItemCombiner";
     string dialogueTag = "Talkable";
     string colorTag = "color";
-    string pipeTag = "Pipe";
+    string wordTag = "WordScramble";
     string keyTag = "KeyPiece";
-    string formTag = "KeyForm";
+    string solveTag = "Solvers";
     public Material highlightMaterial;
     Material defaultMaterial;
     public float dist;
@@ -24,6 +24,8 @@ public class SelectionManager : MonoBehaviour
     public List<Sprite> interactSprites;
     public Image interactImage;
     public colorPuzzleManager colorButtonPuzzle;
+    public PhotoManager photos;
+
 
     // Start is called before the first frame update
     void Start()
@@ -107,12 +109,27 @@ public class SelectionManager : MonoBehaviour
                 
                 if (hit.distance < 4)
                 {
-                    interactImage.sprite = interactSprites[3];
+                    if(!selection.gameObject.name.Contains("Solution"))
+                    {
+                        interactImage.sprite = interactSprites[3];
+                    }
                     if (Input.GetKeyDown(KeyCode.E) && Player.holding == null && !Player.throwable)
                     {
                         selection.GetComponent<ItemOverworld>().TextUpdate();
                         Player.gameObject.GetComponent<InventoryManager>().AddItem(selection.GetComponent<ItemOverworld>().itemToGive);
-                        selection.gameObject.SetActive(false);
+                        if(selection.gameObject.name.Contains("Solution"))
+                        {
+                            selection.GetComponent<BoxCollider>().enabled = false;
+                        }
+                        else
+                        {
+                            if(selection.gameObject.name == "separatedPics_0 (1)")
+                            {
+                                photos.picTwo = null;
+                            }
+                            selection.gameObject.SetActive(false);
+
+                        }
                     }
                 }
             }
@@ -162,7 +179,18 @@ public class SelectionManager : MonoBehaviour
                         InventoryManager mainInventory = Player.gameObject.GetComponent<InventoryManager>();
                         if (mainInventory.inventory[mainInventory.selectedItem] == selectionn.GetComponent<itemInteractScript>().solution)
                         {
-                            selectionn.GetComponent<itemInteractScript>().finish.SetTrigger("Solve");
+                            if(selectionn.gameObject.name == "greenEye")
+                            {
+                                photos.picThree.SetActive(true);
+                            } else if(selectionn.gameObject.name == "mirrorHammer")
+                            {
+                                photos.picFour.SetActive(true);
+                            } else
+                            {
+                                selectionn.GetComponent<itemInteractScript>().finish.SetTrigger("Solve");
+
+                            }
+
                             mainInventory.inventory[mainInventory.selectedItem] = null;
                             mainInventory.UpdateUI();
                         }
@@ -181,6 +209,44 @@ public class SelectionManager : MonoBehaviour
                         InventoryManager mainInventory = Player.gameObject.GetComponent<InventoryManager>();
                         selectionn.GetComponent<ItemCombineScript>().Check(mainInventory.selectedItem, mainInventory);
                         mainInventory.UpdateUI();
+                    }
+                }
+            }
+            else if (selection.CompareTag(wordTag))
+            {
+                interactImage.sprite = interactSprites[2];
+                if (hit.distance < 4)
+                {
+                    var selectionn = hit.transform;
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        if(selectionn.GetComponent<WordPanelScript>().curSprite < 5)
+                        {
+                            selectionn.GetComponent<WordPanelScript>().curSprite++;
+
+                        }
+                        else
+                        {
+                            selectionn.GetComponent<WordPanelScript>().curSprite = 0;
+                        }
+                    }
+                }
+            }
+            else if (selection.CompareTag(solveTag))
+            {
+                if (hit.distance < 4)
+                {
+                    interactImage.sprite = interactSprites[2];
+                    var selectionn = hit.transform;
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        InventoryManager mainInventory = Player.gameObject.GetComponent<InventoryManager>();
+                        if (selectionn.GetComponent<PiecesManager>().piecesToEnter.Contains(mainInventory.inventory[mainInventory.selectedItem]))
+                        {
+                            selectionn.GetComponent<PiecesManager>().Check(mainInventory.inventory[mainInventory.selectedItem]);
+                            mainInventory.inventory[mainInventory.selectedItem] = null;
+                            mainInventory.UpdateUI();
+                        }
                     }
                 }
             }

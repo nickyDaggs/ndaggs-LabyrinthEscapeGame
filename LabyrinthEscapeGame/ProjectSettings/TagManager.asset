@@ -13,6 +13,8 @@ TagManager:
   - ItemInteract
   - Talkable
   - ItemCombiner
+  - WordScramble
+  - Solvers
   layers:
   - Default
   - TransparentFX

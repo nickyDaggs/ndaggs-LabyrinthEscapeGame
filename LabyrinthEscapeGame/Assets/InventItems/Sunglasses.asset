@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ca19ab572f39a48a81652a10f67c46, type: 3}
   m_Name: Sunglasses
   m_EditorClassIdentifier: 
-  itemName: Fake Key
-  itemSprite: {fileID: 21300000, guid: c9d1c583b25938d4a806f7365d2e3baf, type: 3}
+  itemName: Sunglasses
+  itemDescription: Would look cool on an outfit
+  itemSprite: {fileID: 21300000, guid: b6915372c645c1543aaab39db04bc5af, type: 3}

@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject holding = null;
     public Transform holdPos;
 
+    public bool movable;
+
+
 
     // Start is called before the first frame update
     void Start()
