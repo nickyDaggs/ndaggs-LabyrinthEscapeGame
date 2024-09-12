@@ -9,8 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 9f682ac9dbc1d91438d7b97a489d8651
   - enabled: 1
+    path: Assets/Scenes/Cutscene.unity
+    guid: 9234d23c805cc664a98f1cb96ae59c38
+  - enabled: 1
     path: Assets/Scenes/MannyLevel.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/MannyDeath.unity
+    guid: ec52889ebadd14a45be3d08f41d10ee7
+  - enabled: 1
+    path: Assets/Scenes/EndLevel 1.unity
+    guid: 5813f8b06c7bb3844b0df7f86f111215
   - enabled: 1
     path: Assets/Scenes/EndScreen.unity
     guid: 498c1c589f1cad243839c97c842fd158

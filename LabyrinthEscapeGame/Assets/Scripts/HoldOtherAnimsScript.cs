@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HoldOtherAnimsScript : MonoBehaviour
 {
@@ -17,6 +18,16 @@ public class HoldOtherAnimsScript : MonoBehaviour
         
     }
 
+    public void changeScene()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+    public void changeScene2()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     IEnumerator grayScaleTransition()
     {
         //yield return new WaitForSeconds(3f);
@@ -25,7 +36,7 @@ public class HoldOtherAnimsScript : MonoBehaviour
         {
             while(sprites[i].color.a > 0)
             {
-                sprites[i].color = new Color(sprites[i].color.r, sprites[i].color.g, sprites[i].color.b, sprites[i].color.a - .05f);
+                sprites[i].color = new Color(sprites[i].color.r, sprites[i].color.g, sprites[i].color.b, sprites[i].color.a - .03f);
                 yield return new WaitForSeconds(.1f);
             }
         }

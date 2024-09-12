@@ -25,6 +25,7 @@ public class SelectionManager : MonoBehaviour
     public Image interactImage;
     public colorPuzzleManager colorButtonPuzzle;
     public PhotoManager photos;
+    public ScrambleManager scramble;
 
 
     // Start is called before the first frame update
@@ -214,21 +215,27 @@ public class SelectionManager : MonoBehaviour
             }
             else if (selection.CompareTag(wordTag))
             {
-                interactImage.sprite = interactSprites[2];
+                
                 if (hit.distance < 4)
                 {
+                    interactImage.sprite = interactSprites[2];
                     var selectionn = hit.transform;
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        if(selectionn.GetComponent<WordPanelScript>().curSprite < 5)
+                        if(!selectionn.GetComponent<WordPanelScript>().off)
                         {
-                            selectionn.GetComponent<WordPanelScript>().curSprite++;
+                            if (selectionn.GetComponent<WordPanelScript>().curSprite < 5)
+                            {
+                                selectionn.GetComponent<WordPanelScript>().curSprite++;
 
+                            }
+                            else
+                            {
+                                selectionn.GetComponent<WordPanelScript>().curSprite = 0;
+                            }
                         }
-                        else
-                        {
-                            selectionn.GetComponent<WordPanelScript>().curSprite = 0;
-                        }
+                        
+                        scramble.Check();
                     }
                 }
             }

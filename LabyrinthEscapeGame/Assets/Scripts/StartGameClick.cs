@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartGameClick : MonoBehaviour
 {
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -12,8 +13,8 @@ public class StartGameClick : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void ClickGame()
+    public void ClickGame(int num)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(num);
     }
 }

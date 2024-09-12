@@ -7,6 +7,8 @@ public class WordPanelScript : MonoBehaviour
     public int curSprite;
 
     public List<Sprite> images;
+
+    public bool off = false;
     // Start is called before the first frame update
     void Start()
     {

@@ -11,6 +11,9 @@ public class ItemCombineScript : MonoBehaviour
     public string keyword;
     public InventoryItem wrongItem;
 
+    public Animator anim;
+    public bool trigger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,10 @@ public class ItemCombineScript : MonoBehaviour
         if(manager.inventory[item] == correct)
         {
             manager.inventory[item] = newItem;
+            if(trigger)
+            {
+                anim.SetTrigger("Next");
+            }
         } else
         {
             if(incorrectResult && manager.inventory[item].itemName.Contains(keyword))
@@ -30,5 +37,10 @@ public class ItemCombineScript : MonoBehaviour
                 manager.inventory[item] = wrongItem;
             }
         }
+    }
+
+    public void animate()
+    {
+        
     }
 }

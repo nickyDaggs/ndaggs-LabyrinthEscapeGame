@@ -13,7 +13,10 @@ public class ScrambleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(on)
+        {
+            TurnOn();
+        }
     }
 
     public void TurnOn()
@@ -40,7 +43,7 @@ public class ScrambleManager : MonoBehaviour
         {
             for (int i = 0; i < panelList.Count; i++)
             {
-                panelList[i].enabled = false;
+                panelList[i].off = true;
             }
             Safe.SetTrigger("Open");
         }

@@ -69,11 +69,20 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(InventoryItem item)
     {
-        if(curIndex < inventoryLim)
+        int realIndex = 0;
+        for (int i = 0; i < inventoryLim; i++)
         {
-            inventory.SetValue(item, curIndex);
+            if (inventory[i] != null && i == realIndex)
+            {
+                realIndex++;
+            }
+            
+        }
+        if (curIndex < inventoryLim)
+        {
+            inventory.SetValue(item, realIndex);
             UpdateUI();
-            curIndex++;
+            //curIndex++;
         }
     }
 }
